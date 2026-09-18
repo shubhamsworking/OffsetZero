@@ -74,6 +74,17 @@ The script produces 100 messages to `single-partitioned-events`. Point
 `KAFKA_CONSOLE_PRODUCER_COMMAND` to your own Kafka installation; do not assume
 that `kafka-console-producer.sh` is on `PATH`.
 
+If you prefer to keep the path in the script, edit
+`../scripts/produce-events.sh` and prefix the producer command with your Kafka
+`bin` directory, for example:
+
+```bash
+producer_command="/path/to/kafka/bin/kafka-console-producer.sh"
+```
+
+Replace `/path/to/kafka/bin` with the path on your machine before running the
+script.
+
 The broker and topic can also be overridden:
 
 ```bash
