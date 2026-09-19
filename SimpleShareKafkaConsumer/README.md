@@ -69,6 +69,30 @@ Use scripts/produce-events.sh to produce 1-100 messages to kafka topic. Make sur
 
 Clone repository and run multiple instances of same program to see the effect.
 
+The following example shows records from the same partition being delivered to
+two instances of the same share consumer. Each instance acknowledges and commits
+the records it processes:
+
+```mermaid
+flowchart LR
+	P[Topic: single-partitioned-events\nPartition 0] --> M1[Message 1]
+	P --> M2[Message 2]
+	P --> M3[Message 3]
+	P --> M4[Message 4]
+
+	M1 --> C1[Consumer instance 1\nprocess -> ACCEPT -> commit]
+	M3 --> C1
+	M2 --> C2[Consumer instance 2\nprocess -> ACCEPT -> commit]
+	M4 --> C2
+
+	C1 --> G[Share group state\noffsetzero-share-consumer-group]
+	C2 --> G
+```
+
+This is an illustrative assignment, not a guaranteed alternating order. The
+share coordinator assigns available records to members of the same share group,
+including members reading from the same partition.
+
 ## Share Consumer Configuration
 
 The example sets these properties in `SimpleShareKafkaConsumer`:
