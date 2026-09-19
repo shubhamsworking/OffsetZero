@@ -74,19 +74,28 @@ two instances of the same share consumer. Each instance acknowledges and commits
 the records it processes:
 
 ```mermaid
-flowchart LR
-	P[Topic: single-partitioned-events\nPartition 0] --> M1[Message 1]
-	P --> M2[Message 2]
-	P --> M3[Message 3]
-	P --> M4[Message 4]
+sequenceDiagram
+	participant P as Partition 0
+	participant S as Share coordinator
+	participant C1 as Consumer instance 1
+	participant C2 as Consumer instance 2
 
-	M1 --> C1[Consumer instance 1\nprocess -> ACCEPT -> commit]
-	M3 --> C1
-	M2 --> C2[Consumer instance 2\nprocess -> ACCEPT -> commit]
-	M4 --> C2
+	P->>S: Message 1 (offset 0)
+	S->>C1: Deliver offset 0
+	C1->>C1: Process and ACCEPT
+	C1->>S: commitSync()
 
-	C1 --> G[Share group state\noffsetzero-share-consumer-group]
-	C2 --> G
+	P->>S: Message 2 (offset 1)
+	S->>C2: Deliver offset 1
+	C2->>C2: Process and ACCEPT
+	C2->>S: commitSync()
+
+	P->>S: Message 3 (offset 2)
+	S->>C1: Deliver offset 2
+	C1->>C1: Process and ACCEPT
+	C1->>S: commitSync()
+
+	Note over C1,C2: Both instances use group offsetzero-share-consumer-group
 ```
 
 This is an illustrative assignment, not a guaranteed alternating order. The
