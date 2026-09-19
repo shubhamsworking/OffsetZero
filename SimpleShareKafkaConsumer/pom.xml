@@ -44,7 +44,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.5.0</version>
                 <configuration>
-                    <mainClass>com.offsetzero.kafka.LegacyKafkaConsumer</mainClass>
+                    <mainClass>com.offsetzero.kafka.SimpleShareKafkaConsumer</mainClass>
                 </configuration>
             </plugin>
         </plugins>

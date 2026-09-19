@@ -63,54 +63,11 @@ reset by changing it.
 
 ## Produce Events
 
-From this module directory, run the repository producer script:
-
-```bash
-KAFKA_CONSOLE_PRODUCER_COMMAND=/path/to/kafka/bin/kafka-console-producer.sh \
-	../scripts/produce-events.sh
-```
-
-The script produces 100 messages to `single-partitioned-events`. Point
-`KAFKA_CONSOLE_PRODUCER_COMMAND` to your own Kafka installation; do not assume
-that `kafka-console-producer.sh` is on `PATH`.
-
-If you prefer to keep the path in the script, edit
-`../scripts/produce-events.sh` and prefix the producer command with your Kafka
-`bin` directory, for example:
-
-```bash
-producer_command="/path/to/kafka/bin/kafka-console-producer.sh"
-```
-
-Replace `/path/to/kafka/bin` with the path on your machine before running the
-script.
-
-The broker and topic can also be overridden:
-
-```bash
-KAFKA_BOOTSTRAP_SERVERS=localhost:9092 \
-KAFKA_TOPIC=single-partitioned-events \
-KAFKA_CONSOLE_PRODUCER_COMMAND=/path/to/kafka/bin/kafka-console-producer.sh \
-	../scripts/produce-events.sh
-```
+Use scripts/produce-events.sh to produce 1-100 messages to kafka topic. Make sure to do necessary bin path changes alonside security configurations.
 
 ## Run The Consumer
 
-Compile the module:
-
-```bash
-mvn compile
-```
-
-Run one consumer:
-
-```bash
-mvn exec:java -Dexec.mainClass=com.offsetzero.kafka.SimpleShareKafkaConsumer
-```
-
-Run the same command in two or more terminals to observe records being shared
-by the members of the same share group. Stop a process with `Ctrl+C`; the
-shutdown hook wakes the poll and the consumer closes cleanly.
+Clone repository and run multiple instances of same program to see the effect.
 
 ## Share Consumer Configuration
 
