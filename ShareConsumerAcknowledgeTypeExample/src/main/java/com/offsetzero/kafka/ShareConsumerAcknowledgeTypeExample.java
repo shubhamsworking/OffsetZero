@@ -54,16 +54,11 @@ public final class ShareConsumerAcknowledgeTypeExample {
                     records = consumer.poll(Duration.ofMillis(500));
                 } catch (RecordDeserializationException exception) {
                     rejectDeserializationFailure(consumer, exception);
-                    consumer.commitSync();
                     continue;
                 }
 
                 for (ConsumerRecord<String, EventMessage> record : records) {
-                    if ("rest".equalsIgnoreCase(record.value().getType())) {
-                        restBackendProcess(record, consumer);
-                    } else {
-                        backendProcess(record, consumer);
-                    }
+                    restBackendProcess(record, consumer);
                 }
                 consumer.commitSync();
                 System.out.println("Committed for batch of records " + records.count());
@@ -77,14 +72,6 @@ public final class ShareConsumerAcknowledgeTypeExample {
             consumer.close();
             System.out.println("Consumer closed");
         }
-    }
-
-    private static void backendProcess(ConsumerRecord<String, EventMessage> record,
-                                       KafkaShareConsumer<String, EventMessage> consumer) {
-        System.out.println("backendProcess record metadata: topic=" + record.topic()
-                + ", partition=" + record.partition() + ", offset=" + record.offset()
-                + ", value=" + record.value());
-        consumer.acknowledge(record, AcknowledgeType.ACCEPT);
     }
 
     private static void restBackendProcess(ConsumerRecord<String, EventMessage> record,

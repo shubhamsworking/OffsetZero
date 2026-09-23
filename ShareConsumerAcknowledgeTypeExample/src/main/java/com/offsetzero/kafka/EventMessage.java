@@ -3,15 +3,13 @@ package com.offsetzero.kafka;
 public final class EventMessage {
 
     private String id;
-    private String type;
     private String event;
 
     public EventMessage() {
     }
 
-    public EventMessage(String id, String type, String event) {
+    public EventMessage(String id, String event) {
         this.id = id;
-        this.type = type;
         this.event = event;
     }
 
@@ -21,14 +19,6 @@ public final class EventMessage {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getEvent() {
@@ -41,6 +31,6 @@ public final class EventMessage {
 
     @Override
     public String toString() {
-        return "EventMessage{id='" + id + "', type='" + type + "', event='" + event + "'}";
+        return "EventMessage{id='" + id + "', event='" + event + "'}";
     }
 }

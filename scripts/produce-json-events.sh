@@ -4,16 +4,11 @@ set -euo pipefail
 
 bootstrap_servers="${KAFKA_BOOTSTRAP_SERVERS:-localhost:9092}"
 topic="${KAFKA_TOPIC:-events}"
-producer_command="${KAFKA_CONSOLE_PRODUCER_COMMAND:-kafka-console-producer.sh}"
+producer_command="${KAFKA_CONSOLE_PRODUCER_COMMAND:-/home/shubham/kafka_2.13-4.2.0/bin/kafka-console-producer.sh}"
 
 {
     for number in $(seq 1 50); do
-        if (( number % 2 == 0 )); then
-            type="rest"
-        else
-            type="native"
-        fi
-        printf '{"id":"event-%03d","type":"%s","event":"created"}\n' "$number" "$type"
+        printf '{"id":"event-%03d","event":"created"}\n' "$number"
     done
     printf 'not-json-record-1\n'
     printf 'not-json-record-2\n'

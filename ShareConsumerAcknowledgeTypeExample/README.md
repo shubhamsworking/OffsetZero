@@ -2,9 +2,9 @@
 
 This example extends `SimpleShareKafkaConsumer` with a typed JSON value
 deserializer and explicit acknowledgement types. JSON values with
-`"type":"native"` use `backendProcess()`. Values with `"type":"rest"` use `restBackendProcess()`, which randomly simulates REST
-throttling: throttled records are acknowledged with `RELEASE` and successful
-records with `ACCEPT`.
+each event is processed asynchronously. While the task is incomplete, the consumer sends
+`RENEW` every five seconds and commits the renewal. Failed tasks use `RELEASE`;
+successful tasks use `ACCEPT`.
 
 The consumer catches `RecordDeserializationException` for the plain-string
 records, prints their failed record metadata, acknowledges them with `REJECT`,
@@ -21,5 +21,5 @@ mvn compile exec:java
 The producer script sends 50 JSON records plus three plain strings:
 
 ```bash
-./scripts/produce-events.sh
+./scripts/produce-json-events.sh
 ```
