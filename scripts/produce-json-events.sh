@@ -4,7 +4,7 @@ set -euo pipefail
 
 bootstrap_servers="${KAFKA_BOOTSTRAP_SERVERS:-localhost:9092}"
 topic="${KAFKA_TOPIC:-events}"
-producer_command="${KAFKA_CONSOLE_PRODUCER_COMMAND:-/home/shubham/kafka_2.13-4.2.0/bin/kafka-console-producer.sh}"
+producer_command="${KAFKA_CONSOLE_PRODUCER_COMMAND:-kafka-console-producer.sh}"
 
 {
     for number in $(seq 1 10); do
