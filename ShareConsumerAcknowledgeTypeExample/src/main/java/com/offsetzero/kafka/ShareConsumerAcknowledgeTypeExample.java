@@ -78,16 +78,12 @@ public final class ShareConsumerAcknowledgeTypeExample {
     private static void restBackendProcess(ConsumerRecord<String, EventMessage> record,
                                             KafkaShareConsumer<String, EventMessage> consumer) {
         if (ThreadLocalRandom.current().nextBoolean()) {
-            System.out.println("REST backend throttled record topic=" + record.topic()
-                    + ", partition=" + record.partition() + ", offset=" + record.offset()
-                    + "; releasing it for redelivery");
+            System.out.println("REST backend throttled record id = " + record.value().getId() + "; releasing it for redelivery");
             consumer.acknowledge(record, AcknowledgeType.RELEASE);
             return;
         }
 
-        System.out.println("REST backend processed record topic=" + record.topic()
-            + ", partition=" + record.partition() + ", offset=" + record.offset()
-            + ", value=" + record.value());
+        System.out.println("REST backend processed record id = " +record.value().getId());
         consumer.acknowledge(record, AcknowledgeType.ACCEPT);
     }
 
@@ -96,7 +92,7 @@ public final class ShareConsumerAcknowledgeTypeExample {
         String topic = exception.topicPartition().topic();
         int partition = exception.topicPartition().partition();
         long offset = exception.offset();
-        System.err.println("Rejecting deserialization failure topic=" + topic
+        System.err.println("Rejecting deserialization failure record id =" + topic
                 + ", partition=" + partition + ", offset=" + offset
                 + ": " + exception.getMessage());
         consumer.acknowledge(topic, partition, offset, AcknowledgeType.REJECT);
