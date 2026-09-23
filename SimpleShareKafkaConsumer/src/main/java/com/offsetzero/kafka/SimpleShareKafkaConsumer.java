@@ -23,10 +23,8 @@ public final class SimpleShareKafkaConsumer {
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "5");
         properties.put(ConsumerConfig.SHARE_ACKNOWLEDGEMENT_MODE_CONFIG, "explicit");
-        properties.put("share.acquire.mode", "record_limit");
-        properties.put("share.record.lock.duration.ms", "10000");
-        properties.put("share.auto.offset.reset", "earliest"); // No effect unless added property in cluster using kafka-configs
-
+        properties.put(ConsumerConfig.SHARE_ACQUIRE_MODE_CONFIG, "record_limit");
+        
         KafkaShareConsumer<String, String> consumer = new KafkaShareConsumer<>(properties);
         final Thread mainThread = Thread.currentThread();
 

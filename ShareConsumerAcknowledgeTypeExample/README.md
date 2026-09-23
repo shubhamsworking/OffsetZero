@@ -82,8 +82,6 @@ The Java consumer configures these properties:
 | `max.poll.records` | `5` | Limits the number of records returned by one poll. |
 | `share.acknowledgement.mode` | `explicit` | Requires the application to acknowledge each record. |
 | `share.acquire.mode` | `record_limit` | Acquires records according to the configured record limit. |
-| `share.record.lock.duration.ms` | `10000` | Duration for which an acquired record remains locked while being processed. |
-| `share.auto.offset.reset` | `earliest` | Documents the desired initial offset policy for the share group. Configure the effective group setting on the broker when required. |
 
 The consumer polls every 500 milliseconds, processes each record, acknowledges
 it, and commits the batch with `commitSync()`.

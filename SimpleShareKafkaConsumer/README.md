@@ -55,12 +55,6 @@ Share consumers do not accept the regular client property
 	--alter
 ```
 
-The Java code includes `share.auto.offset.reset=earliest` as documentation, but
-the comment in the source is intentional: the effective setting must be added
-to the Kafka cluster/group with the command above. This setting applies when
-the share group has no existing start offset. Existing share-group state is not
-reset by changing it.
-
 ## Produce Events
 
 Use scripts/produce-events.sh to produce 1-100 messages to kafka topic. Make sure to do necessary bin path changes alonside security configurations.
@@ -104,8 +98,6 @@ The example sets these properties in `SimpleShareKafkaConsumer`:
 | `max.poll.records` | `5` | Limits each poll result to at most five records. |
 | `share.acknowledgement.mode` | `explicit` | Requires every record to be acknowledged with `ACCEPT`, `RELEASE`, or `REJECT`. |
 | `share.acquire.mode` | `record_limit` | Uses the configured record limit when acquiring records for delivery. |
-| `share.record.lock.duration.ms` | `10000` | Keeps a record locked for up to 10 seconds while it is being processed. |
-| `share.auto.offset.reset` | `earliest` | Group-level initial offset policy; configure it with `kafka-configs.sh`, not as a regular client offset property. |
 
 The consumer acknowledges each successfully processed record with `ACCEPT`,
 then calls `commitSync()` for the batch. A record that is not acknowledged
