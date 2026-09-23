@@ -31,7 +31,7 @@ public final class ShareConsumerAcknowledgeTypeExample {
         properties.put(ConsumerConfig.SHARE_ACKNOWLEDGEMENT_MODE_CONFIG, "explicit");
         properties.put("share.acquire.mode", "record_limit");
         properties.put("share.record.lock.duration.ms", "10000");
-        properties.put("share.auto.offset.reset", "earliest");
+        properties.put("share.auto.offset.reset", "earliest"); // does not work from client side
 
         KafkaShareConsumer<String, EventMessage> consumer = new KafkaShareConsumer<>(properties);
         Thread mainThread = Thread.currentThread();
