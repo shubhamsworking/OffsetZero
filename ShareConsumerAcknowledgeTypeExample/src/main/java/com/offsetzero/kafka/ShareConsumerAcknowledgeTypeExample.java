@@ -58,6 +58,7 @@ public final class ShareConsumerAcknowledgeTypeExample {
                 }
 
                 for (ConsumerRecord<String, EventMessage> record : records) {
+                    Thread.sleep(3000);
                     restBackendProcess(record, consumer);
                 }
                 consumer.commitSync();
