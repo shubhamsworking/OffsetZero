@@ -51,14 +51,17 @@ public final class ShareConsumerAcknowledgeTypeExample {
                 try {
                     records = consumer.poll(Duration.ofMillis(500));
                 } catch (RecordDeserializationException exception) {
+                    //Handle poison pills / improper records separately
                     rejectDeserializationFailure(consumer, exception);
                     continue;
                 }
 
                 for (ConsumerRecord<String, EventMessage> record : records) {
                     Thread.sleep(3000);
+                    //Process records
                     restBackendProcess(record, consumer);
                 }
+                //Manually commit to report all the individual acknowledgements (ACCEPT, REJECT, RELEASE, RENEW) of this batch of messages to broker
                 consumer.commitSync();
                 System.out.println("Committed for batch of records " + records.count());
             }
@@ -75,12 +78,14 @@ public final class ShareConsumerAcknowledgeTypeExample {
 
     private static void restBackendProcess(ConsumerRecord<String, EventMessage> record,
                                             KafkaShareConsumer<String, EventMessage> consumer) {
+        //Simulate REST API throttling messages, hence release to re-attempt processing
         if (ThreadLocalRandom.current().nextBoolean()) {
             System.out.println("REST backend throttled record id = " + record.value().getId() + "; releasing it for redelivery");
             consumer.acknowledge(record, AcknowledgeType.RELEASE);
             return;
         }
 
+        //Successful processing
         System.out.println("REST backend processed record id = " +record.value().getId());
         consumer.acknowledge(record, AcknowledgeType.ACCEPT);
     }
