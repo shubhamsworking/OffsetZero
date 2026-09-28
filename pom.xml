@@ -12,5 +12,6 @@
     <modules>
         <module>SimpleShareKafkaConsumer</module>
         <module>ShareConsumerAcknowledgeTypeExample</module>
+        <module>ShareConsumerRenewAcknowledgeTypeExample</module>
     </modules>
 </project>
