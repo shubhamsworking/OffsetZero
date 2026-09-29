@@ -10,6 +10,15 @@ deserializer cannot parse a record, the consumer catches
 `RecordDeserializationException`, prints the record metadata, and acknowledges
 the record with `REJECT` so the malformed record is not retried.
 
+
+## Prerequisites
+
+- Java 17+
+- Maven 3.9+
+- Kafka 4.x running on `localhost:9092`
+- `kafka-topics.sh`, `kafka-configs.sh`, and `kafka-console-producer.sh`
+- A Kafka installation with the commands above available, or their full paths
+
 ## Acknowledgement Types
 
 With `share.acknowledgement.mode=explicit`, each acquired record must receive
@@ -58,12 +67,6 @@ Set `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`, or
 `KAFKA_CONSOLE_PRODUCER_COMMAND` to override the script defaults.
 
 ## Run The Consumer
-
-From this module directory:
-
-```bash
-mvn compile exec:java
-```
 
 Run multiple instances with the same group ID to observe records being shared
 across consumers. The group ID and topic are configured in

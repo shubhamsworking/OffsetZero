@@ -40,7 +40,7 @@ Replace `/path/to/kafka/bin` with the `bin` directory from your Kafka
 installation. For a multi-broker cluster, use a replication factor supported by
 your cluster instead of `1`.
 
-## Configure Earliest Offset
+## Configure Earliest Offset (If required)
 
 Share consumers do not accept the regular client property
 `auto.offset.reset`. Configure the share group setting on the broker using
@@ -57,7 +57,7 @@ Share consumers do not accept the regular client property
 
 ## Produce Events
 
-Use scripts/produce-events.sh to produce 1-100 messages to kafka topic. Make sure to do necessary bin path changes alonside security configurations.
+Use `scripts/produce-events.sh` to produce 1-100 messages to kafka topic. Make sure to do necessary bin path changes alonside security configurations.
 
 ## Run The Consumer
 
