@@ -12,8 +12,8 @@ This example demonstrates using a `KafkaShareConsumer` with multiple processing 
 
 ## Recommended walkthrough
 
-1. Start with one consumer instance and a topic with a single partition. This makes the processing flow easier to follow.
-2. Create a topic with one partition.
+Start with one consumer instance and a topic with a single partition. This makes the processing flow easier to follow.
+1. Create a topic with one partition.
 ```bash
 kafka-topics.sh \
 	--bootstrap-server localhost:9092 \
@@ -23,10 +23,10 @@ kafka-topics.sh \
 	--partitions 1 \
 	--replication-factor 1
 ```
-3. Start the consumer. Update the topic name in the code or configuration if needed.
-4. Use the producer script `produce-json-events.sh` in the `scripts` directory to send JSON events of type `EventMessage`. Update its topic name and Kafka CLI path as needed.
-5. Review the consumer logs to follow polling, processing, lock renewal, acknowledgements, and commits.
-6. Once the single-consumer flow is clear, try running multiple consumer instances.
+2. Start the consumer. Update the topic name in the code or configuration if needed.
+3. Use the producer script `produce-json-events.sh` in the `scripts` directory to send JSON events of type `EventMessage`. Update its topic name and Kafka CLI path as needed.
+4. Review the consumer logs to follow polling, processing, lock renewal, acknowledgements, and commits.
+5. Once the single-consumer flow is clear, try running multiple consumer instances.
 
 ## Processing flow
 
